@@ -13,6 +13,8 @@ F_mapped_sam = read.delim(
   header = F
   )
 
+
+
 # 1. Get start/stop base pair positions ----------------------------------------
 
 # Each element is potential F mt-sncRNA
