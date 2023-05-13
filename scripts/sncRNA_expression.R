@@ -64,14 +64,13 @@ library(grDevices)     # CRAN, make gradient for heatmap
 # male_gene_id = paste0("'", male_centroids$Number, "';")
 # male_centroids_gtf$attribute = paste('gene_id', male_centroids$Number, sep = ' ')
 # write_delim(male_centroids_gtf, './sncRNA/mapped_reads_for_expression/M_mtsncRNAs/male_centroids_gtf.GTF', delim = '\t', col_names = F)
-# # Note: went into VSCode after and added quotes around sncRNA number in attribute col and gff header
 #
 # female_centroids_gtf = NULL
 # female_scaffold = rep('MW413895', nrow(female_centroids))
 # female_centroids_gtf$scaffold = female_scaffold
 # female_centroids_gtf = as.data.frame(female_centroids_gtf)
 # female_centroids_gtf$annotation_source = 'MW413895'
-# female_centroids_gtf$feature_type = 'gene' # featureCounts prob looks for genes?
+# female_centroids_gtf$feature_type = 'gene' # featureCounts looks for gene in GTF
 # female_centroids_gtf$start = female_centroids$start
 # female_centroids_gtf$stop = female_centroids$stop
 # female_centroids_gtf$score = '.'
