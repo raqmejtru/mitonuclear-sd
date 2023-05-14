@@ -278,28 +278,7 @@ ggsave(
 # Number of significant hallmark pathways:
 fgsea_output_hallmark %>% filter(padj < 0.05) %>% nrow()
 
-# GO: Biological Pathways (too many for legible plot)
-# plot_GOBP = fgsea_output_GOBP %>%
-#   as_tibble() %>%
-#   arrange(desc(NES)) %>%
-#   mutate(pathway = gsub('GOBP_', '', pathway)) %>%
-#   filter(padj < 0.05) %>%
-#   filter(size > 10) %>%
-#   ggplot(aes(reorder(pathway, NES), NES)) +
-#   geom_point() +
-#   coord_flip() +
-#   labs(x = '',
-#        y = 'Normalized Enrichment Score (NES)',
-#        title = 'Gene Set Enrichment of GO: Biological Pathways',
-#        subtitle = 'Female-biased: NES < 0\nMale-biased: NES > 0') +
-#   theme_minimal() +
-#   theme(plot.subtitle = element_text(hjust = 0),
-#         plot.title = element_text(hjust = 0),
-#         legend.position = 'none')
-# png('gsea_plot_GOBP.png',
-#     width = 1000,
-#     height = 2000)
-
+# Too many significantly enriched GOBP pathways to plot
 
 # Combine hallmark and GOBP fgsea results
 fgsea_results_complete = full_join(
