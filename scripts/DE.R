@@ -19,7 +19,7 @@ library(pheatmap)      # CRAN, clustered heat maps
 # Make a list of sorted bam file names to copy over to bam_files list below
 # for file in *.bam; do echo "'$file'," >> bam_files.txt; done
 
-# Note: bamFiles order should match sample order in sampleInfoTACC.csv
+# Note: bamFiles order should match sample order in sample_info.csv
 bam_files = c(
   './RNASeq/PohiBra080_sorted.bam',
   './RNASeq/PohiBra081_sorted.bam',
@@ -82,10 +82,10 @@ pcg_counts = read.csv(
   as.matrix()
 
 
-# Note: manually removed sample 90 from sampleInfoTACC.csv
+# Note: manually removed sample 90 from sample_info.csv
 # Sample condition as factors
 sample_info = read.csv(
-  "./RNASeq/DE/sampleInfoTACC.csv",
+  "./RNASeq/sample_info.csv",
   header = T
   )
 
