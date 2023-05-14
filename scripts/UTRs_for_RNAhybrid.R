@@ -1,12 +1,15 @@
 # Script creates data frames containing 3'UTRs hit by F and M mt-sncRNAs,
 # respectively, along with the DNA sequences of the 3'UTRs.
 
+
+
 # 0. Load libraries and data ---------------------------------------------------
 library(tidyverse)
 
 F_centroids_BLAST = read.csv('./sncRNA/before_filtering/female_before_filtering/F_centroids_BLAST.csv')
 M_centroids_BLAST = read.csv('./sncRNA/before_filtering/male_before_filtering/M_centroids_BLAST.csv')
 UTRsequences = read.csv('./sncRNA/3UTRs_w_DNA_sequences.csv')
+
 
 
 # 1. Clean 3'UTRs  -------------------------------------------------------------
@@ -89,6 +92,7 @@ write.csv(
   )
 
 
+
 # 3. Make DF of 3'UTRs hit by M centroids, add DNA sequences -------------------
 M_clusters_with_hits = M_centroids_BLAST %>%
   select(
@@ -107,7 +111,7 @@ M_UTR_ID_clean = M_centroids_BLAST %>%
     Type,
     ID
   ) %>%
-  filter(Type == "3'UTR'") %>%
+  filter(Type == "3'UTR") %>%
   separate(
     col = 3,
     into = c('FUN', 'utr'),
