@@ -52,7 +52,7 @@ sbatch export_results.sh
 
 
 ### **Interpreting models**
-Unsure of an exact cutoff for mpDockQ scores, but pDockQ scores are as follows:
+DockQ score cutoffs:
 
 From https://github.com/bjornwallner/DockQ:
 ```
@@ -77,23 +77,3 @@ In ChimeraX, use following command to color residues by confidence:
 ``` 
 color bfactor #* palette alphafold
 ```
-
-
-### **References for troubleshooting** 
-- https://confluence.desy.de/display/MXW/alphafold+2.1.1+-+docker  
-	Messages like ....
-    ```
-	I1129 11:06:21.219282 140709785240512 xla_bridge.py:231] Unable to initialize backend 'tpu_driver': Not found: Unable to find driver in registry given worker:
-	I1129 11:06:21.684458 140709785240512 xla_bridge.py:231] Unable to initialize backend 'tpu': Invalid argument: TpuPlatform is not available.
-    ```
-	.... can be safely ignored.
-- https://github.com/google/jax/discussions/6843
-	```
-    Error: Couldn't invoke ptxas --version
-    ```
-	Fixed with conda install of `cuda-nvcc`
-- Use singularity module on TACC:
-    ```
-    module load tacc-singularity
-    ```
-
