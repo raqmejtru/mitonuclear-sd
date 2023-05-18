@@ -1,6 +1,6 @@
 ___
 ## **AlphaPulldown**
-*Install and Run on TACC HPC*  
+*Install and Run on TACC Lonestar6 HPC*  
 April 2023
 ___
 
