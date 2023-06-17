@@ -1,6 +1,9 @@
 # Mitonuclear sex determination in freshwater mussels
 
-This project investigates the role of mitochondrial DNA in the sex determination of freshwater mussels with doubly uniparental mitochondrial inheritance. This repository hosts scripts for the following analyses:
+This project investigates the role of mitochondrial DNA in the sex determination of freshwater mussels with doubly uniparental mitochondrial inheritance. 
+
+## Analyses 
+This repository hosts scripts for the following analyses:
 
 -   differential gene expression (`DESeq2`)
 
@@ -12,6 +15,8 @@ This project investigates the role of mitochondrial DNA in the sex determination
 
 -   mitochondrial short-non coding RNA validation
 
+
+Analyses were performed by running `analysis_workflow.R`, and results were synthesized into the visualizations presented below. 
 <br> <br>
 
 ## Data visualizations
