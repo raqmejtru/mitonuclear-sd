@@ -1,6 +1,6 @@
-# Mitonuclear sex determination in freshwater mussels
+# Mitonuclear sex determination/development in *Potamilus streckersoni*
 
-This project investigates the role of mitochondrial DNA in the sex determination of freshwater mussels with doubly uniparental mitochondrial inheritance. 
+This project investigates the role of mitochondrial DNA in the sex determination/development of *Potamilus streckersoni*, a freshwater mussel with doubly uniparental mitochondrial inheritance. 
 
 ## Analyses 
 This repository hosts scripts for the following analyses:
