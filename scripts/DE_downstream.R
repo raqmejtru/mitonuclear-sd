@@ -12,6 +12,7 @@ library(fgsea)         # Bioconductor, Fast Gene Set Enrichment Analysis
 library(igraph)        # CRAN, used by tidygraph
 library(ggraph)        # CRAN, ggplot implementation of networks
 library(tidygraph)     # CRAN, add tidy node and edge data to network
+library(gghighlight)   # CRAN, highlight condition in ggplots
 
 
 
@@ -63,113 +64,107 @@ target_results = target_results %>% distinct()
 # Expression of all genes
 volcano_nuclear = nuclear_results %>%
   mutate(DE = case_when(
-    log2FoldChange < -1 & padj < 0.05 ~ 'Female-biased',
-    log2FoldChange > 1 & padj < 0.05 ~ 'Male-biased',
+    log2FoldChange < -1 & padj < 0.05 ~ 'significantly female-biased',
+    log2FoldChange > 1 & padj < 0.05 ~ 'significantly male-biased',
+    TRUE ~ 'not significant'
     )
   ) %>%
   ggplot() +
   geom_point(
     aes(
-      x = log2FoldChange,
-      y = -log10(padj),
-      fill = DE
+      x     = log2FoldChange,
+      y     = -log10(padj),
+      color = DE
       ),
-    alpha = 0.5,
-    shape = 21,
-    size = 1.5,
-    col = 'black'
-    ) +
+    alpha = 0.7,
+    size  = 3
+  ) +
   scale_x_continuous(
     breaks = seq(-25, 25, 5),
     limits = c(-25, 25)
-    ) +
-  scale_fill_manual(
-    values = c('#D55E00', '#0072B2', 'light grey'),
-    labels = c('Female-biased', 'Male-biased', 'NA')
-    ) +
-  geom_vline(
-    xintercept = c(-1, 1),
-    col = 'black',
-    linetype = 'dashed'
-    ) +
-  geom_hline(
-    yintercept = -log10(0.05),
-    col = 'black',
-    linetype = 'dashed'
-    ) +
+  ) +
+  scale_y_continuous(expand = c(0, 1)) +
+  scale_color_manual(
+    values = c('grey60', '#D55E00', '#0072B2')
+  ) +
+  gghighlight(
+    DE != 'not significant',
+    use_direct_label = FALSE,
+    keep_scales = TRUE
+  ) +
   labs(
-    x = expression('Log'[2]*' Fold-change'),
-    y = expression('-Log'[10]*'  Adjusted P-value'),
-    fill = 'Biased expression'
-    ) +
+    x     = expression('log'[2]*' fold-change'),
+    y     = expression('-log'[10]*'  adj. p-value'),
+    color = 'Gene expression'
+  ) +
   theme_minimal() +
   theme(
-    legend.position = c(0.8, 0.8),
+    legend.position   = c(0.8, 0.8),
     legend.background = element_rect(fill = 'white', color = 'black'),
-    axis.text = element_text(color = 'black', size = 12),
-    axis.title = element_text(color = 'black', size = 12),
-    )
+    axis.text         = element_text(color = 'black', size = 12),
+    axis.title        = element_text(color = 'black', size = 12),
+    panel.grid.minor  = element_blank(),
+    panel.grid.major  = element_blank(),
+    panel.border      = element_rect(color = 'black', fill = NA)
+  )
 
 # Export
 ggsave(
   plot = volcano_nuclear,
   './figures/volcano_nuclear.pdf',
-  width = 7.5,
+  width  = 7.5,
   height = 6,
-  unit = 'in'
+  unit   = 'in'
   )
 
 
 # Expression of sncRNA targets
 volcano_mitonuclear = target_results %>%
-  mutate(DE = case_when(
-    log2FoldChange < -1 & padj < 0.05 ~ 'Female-biased',
-    log2FoldChange > 1 & padj < 0.05 ~ 'Male-biased',
+  mutate(
+    DE = case_when(
+      log2FoldChange < -1 & padj < 0.05 ~ 'significantly female-biased',
+      log2FoldChange > 1 & padj < 0.05 ~ 'significantly male-biased',
+      TRUE ~ 'not significant'
+    ),
+    sncRNA_type = case_when(
+      sncRNA_type == 'F-sncRNA' ~ 'Targeted by F mt-sncRNA',
+      sncRNA_type == 'M-sncRNA' ~ 'Targeted by M mt-sncRNA'
     )
   ) %>%
   ggplot() +
   geom_point(
     aes(
-      x = log2FoldChange,
-      y = -log10(padj),
-      fill = DE
+      x     = log2FoldChange,
+      y     = -log10(padj),
+      color = DE
       ),
-    alpha = 0.8,
-    shape = 21,
-    size = 1.5,
-    col = 'black'
-    ) +
-  scale_fill_manual(
-    values = c('#D55E00', '#0072B2', '#E1E1E1'),
-    labels = c('Female-biased', 'Male-biased', 'NA')
-    ) +
+    alpha = 0.7,
+    size  = 3
+  ) +
+  scale_y_continuous(expand = c(0, 0.2)) +
+  scale_color_manual(
+    values = c('grey60', '#D55E00', '#0072B2')
+  ) +
   facet_grid(~sncRNA_type) +
-  geom_vline(
-    xintercept = c(-1, 1),
-    col = 'black',
-    linetype = 'dashed'
-    ) +
-  geom_hline(
-    yintercept = -log10(0.05),
-    col = 'black',
-    linetype = 'dashed'
-    ) +
   labs(
-    x = expression('Log'[2]*' Fold-change'),
-    y = expression('-Log'[10]*'  Adjusted P-value'),
-    fill = 'Biased expression',
-    ) +
+    x     = expression('log'[2]*' fold-change'),
+    y     = expression('-log'[10]*'  adj. p-value'),
+    color = 'Gene expression'
+  ) +
   scale_x_continuous(
     breaks = seq(-7.5, 2.5, 2.5),
-    ) +
+  ) +
   theme(
-    legend.position = c(0.65, 0.8),
-    axis.text = element_text(color = 'black', size = 10),
-    axis.title = element_text(color = 'black', size = 12),
-    panel.grid = element_line(color =  '#EBEBEB'),
-    panel.background = element_rect(fill = 'white', color = '#EBEBEB'),
-    strip.background = element_rect(fill = '#333333'),
-    strip.text = element_text(color = 'white')
+    legend.position   = c(0.65, 0.8),
+    legend.background = element_rect(fill = 'white', color = 'black'),
+    axis.text         = element_text(color = 'black', size = 10),
+    axis.title        = element_text(color = 'black', size = 12),
+    panel.background  = element_rect(fill = 'white', color = '#EBEBEB'),
+    strip.background  = element_rect(fill = 'black'),
+    strip.text        = element_text(color = 'white', face = 'bold'),
+    panel.grid.minor  = element_blank(),
+    panel.grid.major  = element_blank(),
+    panel.border      = element_rect(color = 'black', fill = NA)
   )
 
 # Export

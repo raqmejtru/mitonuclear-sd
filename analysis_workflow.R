@@ -4,7 +4,7 @@
 
 
 # ------------------------------------------------------------------------------
-setwd("./Mitonulear_sex_determination_in_freshwater_mussels")
+setwd("./mitonuclear-sd")
 
 
 # Script creates data frames containing 3'UTRs hit by F and M mt-sncRNAs,
